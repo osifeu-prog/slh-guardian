@@ -1,14 +1,16 @@
-﻿import os
+import os
 
 # Core
 ENV = os.getenv("ENV", "production").lower()
-MODE = os.getenv("MODE", "polling").lower()  # polling | webhook
-BOT_TOKEN = os.getenv("TELEGRAM_TOKEN")
-WEBHOOK_URL = os.getenv("WEBHOOK_URL")  # for webhook mode (optional)
+MODE = os.getenv("MODE", "polling").lower()
+# Railway deployments historically used TOKEN_GUARDIAN/BOT_TOKEN while the
+# Guardian code expected TELEGRAM_TOKEN. Keep one runtime identity.
+BOT_TOKEN = os.getenv("TELEGRAM_TOKEN") or os.getenv("TOKEN_GUARDIAN") or os.getenv("BOT_TOKEN")
+WEBHOOK_URL = os.getenv("WEBHOOK_URL")
 
 # Admin
-ADMIN_CHAT_ID = os.getenv("ADMIN_CHAT_ID")  # numeric chat_id of admin
-ADMIN_IDS = os.getenv("ADMIN_IDS")  # optional: comma-separated ids
+ADMIN_CHAT_ID = os.getenv("ADMIN_CHAT_ID")
+ADMIN_IDS = os.getenv("ADMIN_IDS")
 
 # Infra
 DATABASE_URL = os.getenv("DATABASE_URL")
